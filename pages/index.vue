@@ -1,16 +1,37 @@
 <template>
-  <div class="bg-slate-500 h-20">
-    <div class="pt-6 pl-12 text-white">
-      <a href="/ff" target="_self">ชั้นหนังสือ</a>
-      <a class="pl-12" href="/howto" target="_self">วิธีใช้งาน</a>
-    </div>
-    
-  </div>
-  <Header />
-  <suggest />
-  <mm />
-  <Navbar />
 
+  <div class="flex justify-center">
+    <div class="bg-pink-300 flex justify-center items-center h-[500px] w-[70]">
+      <div v-if="isVisible" class="overlay" @click="closeOverlay">
+        <div class="overlay-content" @click.stop>
+          <slot></slot>
+          <button @click="closeOverlay">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
-   
-  
+
+<script>
+export default {
+  name: 'Overlay',
+  props: {
+    isVisible: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  methods: {
+    closeOverlay() {
+      this.$emit('close');
+    },
+  },
+};
+</script>
+
+<style>
+#app {
+  text-align: center;
+  margin-top: 50px;
+}
+</style>
