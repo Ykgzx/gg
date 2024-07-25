@@ -1,55 +1,71 @@
 <template>
-  <div class="nav h-[500px] bg-blue-400">
-      <div class=" text-white text-xl ml-8 "> 
-            <div class="pt-8">
-              New Update
-            </div>
-        </div>
-      <div class=" ml-59  h-[150px] flex justify-center items-center">
-        <div class=" flex flex-col justify-center items-center">
-          <div>
-          </div>
-        <div class="grid grid-cols-12 mt-2 gap-4">
-        <div class=" col-span-2 w-2/4 pt-64 ml-24 text-white">
-          <button><a href="https://www.tunwalai.com/chapter/4557230"><img src="/killer.jpeg" alt=""></a></button>
-           <a href="https://www.tunwalai.com/chapter/4557230">ฆาตกรโรคจิตกับเด็กหนีออกจากบ้าน</a>
-        </div>
-        <div class=" col-span-2 w-2/4 pt-64 ml-24 text-white">
-          <button><a href="https://www.readawrite.com/a/6f3f910b3bf7d7a38970eb50ba17e412"><img src="/akira.jpg" alt=""></a></button>
-           <a href="https://www.readawrite.com/a/6f3f910b3bf7d7a38970eb50ba17e412">อคิราห์คืนจันทร์</a>
-        </div>
-        <div class=" col-span-2 w-2/4 pt-64 ml-24 text-white">
-          <button><a href="https://www.readawrite.com/a/94306e374e1b87586e2124d229b0afa6"><img src="/noey.jpg" alt=""></a></button>
-           <a href="https://www.readawrite.com/a/94306e374e1b87586e2124d229b0afa6">พี่จะตีนะเนย</a>
-        </div>
-        <div class=" col-span-2 w-2/4 pt-64 ml-24 text-white">
-          <button><a href="https://www.readawrite.com/a/ac4f906e724d8174d55ec55598b0db67"><img src="/tiger.jpg" alt=""></a></button>
-           <a href="https://www.readawrite.com/a/ac4f906e724d8174d55ec55598b0db67">ลูกเสือเจ้าป่าของพยัคฆ์ใจร้าย</a>
-        </div>
-        <div class=" col-span-2 w-2/4 pt-64 ml-24 text-white">
-          <button><a href="https://www.readawrite.com/a/3b52fb45a246438adddc0425bb744974"><img src="/khem.png" alt=""></a></button>
-           <a href="https://www.readawrite.com/a/3b52fb45a246438adddc0425bb744974">เขมจิราต้องรอด</a>
-        </div>
-        <div class=" col-span-2 w-2/4 pt-64 ml-24 text-white">
-           <button><a href="https://www.readawrite.com/a/65e2dd6e0fa8729c4dfeeed2a835c605"><img src="/heart.jpg" alt=""></a></button>
-           <a href="https://www.readawrite.com/a/65e2dd6e0fa8729c4dfeeed2a835c605">ดวงใจอคิราห์</a>
-        </div>
-        </div>
+  <div>
+    <div class="py-3 mx-20 flex">
+      <div class="flex gap-10 items-center justify-start">
+        <i
+          class="fa-solid fa-bars text-2xl cursor-pointer"
+          @click="toggleSidebar"
+        ></i>
+        <div>Logo</div>
+      </div>
+      <div class="flex gap-10 text-2xl items-center ml-auto">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <i class="fa-solid fa-bell"></i>
+        <i class="fa-regular fa-user"></i>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div
+      :class="[
+        'fixed top-0 left-0 h-full bg-white transition-transform duration-300 border border-black border-t-0',
+        { 'transform -translate-x-full': !sidebarOpen },
+      ]"
+      style="width: 250px"
+    >
+      <div class="flex justify-end py-2 px-3">
+        <i class="fa-solid fa-xmark text-2xl cursor-pointer" @click="toggleSidebarOff"></i>
+      </div>
+      <div class="mx-9">
+        <ul class="flex flex-col gap-3">
+          <li>หน้าหลัก</li>
+          <li>ชุมชน</li>
+          <li>เพิ่มชุมชน</li>
+          <li>แชท</li>
+          <li>ตระกร้า</li>
+          <li>ตั่งค่า</li>
+          <li>ประวัติการรายงาน</li>
+          <li>ขอความช่วยเหลือ</li>
+          <li>ส่งความคิดเห็น</li>
+        </ul>
       </div>
     </div>
   </div>
 </template>
-   
-  <style>
-  .ff{
-    padding: 100px;
-  }
-  
-  .container {
-    width: 900px;
-  }
-  .nav{
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.9)), url()
-  } 
-  </style>
-  
+
+<script>
+export default {
+  data() {
+    return {
+      sidebarOpen: false,
+    };
+  },
+  methods: {
+    toggleSidebar() {
+      this.sidebarOpen = !this.sidebarOpen;
+    },
+    toggleSidebarOff() {
+      this.sidebarOpen = false;
+    }
+
+  },
+
+}
+</script>
+
+<style>
+/* Add a CSS class to handle the transition for showing/hiding the sidebar */
+.sidebar-transition {
+  transition: transform 0.3s ease;
+}
+</style>
