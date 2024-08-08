@@ -34,5 +34,7 @@ export default defineNuxtConfig({
       "noscript": []
     }
   },
-  modules: ['@nuxtjs/tailwindcss']
+
+  modules: ['@nuxtjs/tailwindcss'],
+  compatibilityDate: "2024-08-02"
 })
