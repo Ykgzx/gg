@@ -52,10 +52,10 @@
       </div>
       <div>
         <ul class="flex gap-10 justify-center">
-          <li><div class="flex flex-col"><img src="public/Pro.png" alt="" width="40px"> <p> sfsdfgmdgfk{{ share.username }} </p> </div></li>
-          <li><div><img src="public/Pro.png" alt=""> <p> {{ share.username }} </p> </div></li>
-          <li><div><img src="public/Pro.png" alt=""> <p> {{ share.username }} </p> </div></li>
-          <li><div><img src="public/Pro.png" alt=""> <p> {{ share.username }} </p> </div></li>
+          <li><div class="flex flex-col"><img src="/Proff.png" alt="" width="40px"> <p> sfsdfgmdgfk{{ share.username }} </p> </div></li>
+          <li><div><img src="/Proff.png" alt=""> <p> {{ share.username }} </p> </div></li>
+          <li><div><img src="/Proff.png" alt=""> <p> {{ share.username }} </p> </div></li>
+          <li><div><img src="/Proff.png" alt=""> <p> {{ share.username }} </p> </div></li>
           <li><div><i class="fa-solid fa-ellipsis"></i> <div class="text-xs flex justify-center"> เพิ่มเติม </div> </div></li>
         </ul>
       </div>
