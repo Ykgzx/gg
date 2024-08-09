@@ -78,6 +78,7 @@
         <h3 class="text-center flex-grow">ส่งไปยัง</h3>
         <button class="fa-solid fa-xmark text-2xl" @click="toggleShare"></button>
       </div>
+
       <div class="grid grid-cols-5 gap-4">
         <div
           class="flex flex-col items-center"
