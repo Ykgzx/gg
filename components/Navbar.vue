@@ -146,7 +146,74 @@
       </div>
       <div class="mx-9">
         <ul class="flex flex-col gap-3">
-          <a href="/post"><li>หน้าหลัก</li></a>
+          <button @click="showOverlay = true">
+            <li class="flex justify-start">หน้าหลัก</li>
+          </button>
+          <!-- //overlay// -->
+          <div v-if="showOverlay" class="overlay" @click="closeOverlay">
+            <div class="overlay-content h-full" @click.stop>
+              <h2></h2>
+              <button
+                class="vv flex ml-auto"
+                @click="closeOverlay"
+                aria-label="Close overlay"
+              >
+                X
+              </button>
+              <div class="flex flex-col gap-24">
+                <div class="flex justify-center gap-[1000px]">
+                  <div class="flex justify-start items-center gap-8">
+                    <a href="/"></a>
+                    <h1 class="text-xl">สร้างโพสต์</h1>
+                  </div>
+                  <div class="kk border border-black text-xl flex justify-end">
+                    โพสต์
+                  </div>
+                </div>
+                <div class="flex gap-8 pl-16">
+                  <img class="w-12 h-12" src="/Group.png" alt="Group image" />
+                  <div class="flex gap-[700px]">
+                    <div>
+                      <div>
+                        <h1 class="dd">Username</h1>
+                      </div>
+                      <div>
+                        <label class="hh border border-black" for="options">
+                          ตั้งค่าความเป็นส่วนตัว
+                        </label>
+                        <select
+                          id="options"
+                          v-model="selectedOption"
+                          aria-label="Privacy settings"
+                        >
+                          <option
+                            v-for="option in options"
+                            :key="option"
+                            :value="option"
+                          >
+                            {{ option }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="flex flex-col">
+                      <a
+                        class="flex font-bold text-xl gap-4"
+                        href=""
+                        aria-label="Settings"
+                      >
+                        <img src="/Group 161.png" alt="Settings icon" /> setting
+                      </a>
+                      <a href="" aria-label="Another setting">
+                        <img src="/Group 164.png" alt="Another setting icon" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <li>ชุมชน</li>
           <li>เพิ่มชุมชน</li>
           <li>แชท</li>
@@ -167,7 +234,7 @@ export default {
   data() {
     return {
       sidebarOpen: false,
-      
+      showOverlay: false,
       searchResultsOverlay: false,
       searchOpen: false,
       searchValue: "",
@@ -216,9 +283,6 @@ export default {
           image: "https://via.placeholder.com/40",
         },
       ],
-  
-      
-
     };
   },
   methods: {
@@ -227,11 +291,10 @@ export default {
     },
     toggleSidebarOff() {
       this.sidebarOpen = false;
-
     },
-
-  },
-
+    closeOverlay() {
+      this.showOverlay = false;
+    },
     toggleSearch() {
       this.searchOpen = !this.searchOpen;
       this.searchResultsOverlay = this.searchOpen;
@@ -263,9 +326,9 @@ export default {
       const exists = this.recentSearches.some(
         (item) => item.name === search.name
       );
-    },
-  
-      if (exists) {
+
+
+      if (!exists) {
         this.recentSearches.unshift(search);
 
         if (this.recentSearches.length > 7) {
@@ -309,7 +372,9 @@ export default {
     handleSearchItemClick(item) {
       this.collectSearchResults(item);
     },
-  };
+  }
+}
+}
 
 </script>
 
@@ -331,8 +396,8 @@ export default {
 .sidebar-transition {
   transition: transform 0.3s ease;
 }
-    
-.shadow{
+
+.shadow {
   padding: 8px;
   font-size: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow here */
@@ -401,61 +466,56 @@ select {
   border-radius: 64px;
 }
 
-
 .switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 30px;
-  }
-  
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 34px;
-  }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 20px;
-    width: 20px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-  }
-  
-  input:checked + .slider {
-    background-color: #65558F;
-  }
-  
-  input:checked + .slider:before {
-    transform: translateX(26px);
-  }
-  
-  .content-box {
-    padding: 20px;
-    
-  }
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+}
 
-  .sw{
-    border-radius: 40px;
-    
-  }
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
 
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #65558f;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.content-box {
+  padding: 20px;
+}
+
+.sw {
+  border-radius: 40px;
+}
 </style>
-
