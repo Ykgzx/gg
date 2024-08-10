@@ -146,9 +146,6 @@
       </div>
       <div class="mx-9">
         <ul class="flex flex-col gap-3">
-<<<<<<< Updated upstream
-          <li>หน้าหลัก</li>
-=======
           <button @click="showOverlay = true">
             <li class="flex justify-start">หน้าหลัก</li>
           </button>
@@ -203,7 +200,6 @@
             </div>
           </div>
 
->>>>>>> Stashed changes
           <li>ชุมชน</li>
           <li>เพิ่มชุมชน</li>
           <li>แชท</li>
@@ -224,8 +220,6 @@ export default {
   data() {
     return {
       sidebarOpen: false,
-<<<<<<< Updated upstream
-=======
       showOverlay: false,
       searchResultsOverlay: false,
       searchOpen: false,
@@ -275,7 +269,6 @@ export default {
           image: "https://via.placeholder.com/40",
         },
       ],
->>>>>>> Stashed changes
     };
   },
   methods: {
@@ -284,11 +277,6 @@ export default {
     },
     toggleSidebarOff() {
       this.sidebarOpen = false;
-<<<<<<< Updated upstream
-    }
-
-  },
-=======
     },
     closeOverlay() {
       this.showOverlay = false;
@@ -324,7 +312,6 @@ export default {
       const exists = this.recentSearches.some(
         (item) => item.name === search.name
       );
->>>>>>> Stashed changes
 
 
       if (!exists) {
@@ -393,9 +380,6 @@ export default {
 .sidebar-transition {
   transition: transform 0.3s ease;
 }
-<<<<<<< Updated upstream
-</style>
-=======
 
 .dd {
   font-size: 18px;
@@ -445,4 +429,3 @@ select {
   font-size: 16px;
 }
 </style>
->>>>>>> Stashed changes
