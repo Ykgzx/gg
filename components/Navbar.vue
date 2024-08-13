@@ -171,7 +171,7 @@
                   </div>
                 </div>
                 <div class="flex gap-8 pl-16">
-                  <img class="w-12 h-12" src="/Group.png" alt="Group image" />
+                  <img class="w-12 h-12" src="/" alt="Group image" />
                   <div class="flex gap-[700px]">
                     <div>
                       <div>
@@ -205,7 +205,7 @@
                         <img src="/Group 161.png" alt="Settings icon" /> setting
                       </a>
                       <a href="" aria-label="Another setting">
-                        <img src="/Group 164.png" alt="Another setting icon" />
+                        <img src="/" alt="Another setting icon" />
                       </a>
                     </div>
                   </div>

@@ -308,6 +308,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -387,6 +389,58 @@ export default {
     };
   },
   methods: {
+    async postComment() {
+      if (this.newComment.trim() !== "") {
+        const commentObj = {
+          username: "Current User", // Replace with the actual username
+          time_posted: new Date().toISOString(),
+          text: this.newComment,
+          likes: 0,
+          isLiked: false,
+          replies: [],
+        };
+
+        try {
+          // Send the new comment to the API
+          const response = await axios.post('http://localhost:3000/', {
+            post_id: this.post.post_id, // Pass the post ID
+            user_id: this.user.user_id, // Pass the user ID
+            content: this.newComment,
+          });
+
+          // Handle the API response
+          if (response.status === 201) {
+            if (!this.replyTarget) {
+              this.comments.push(commentObj);
+            } else {
+              const { type, index, replyIndex, commentIndex } = this.replyTarget;
+              if (type === "comment") {
+                this.comments[index].replies.push(commentObj);
+                this.comments[index].showReplies = true; // Show replies immediately
+              } else if (type === "reply") {
+                this.comments[commentIndex].replies[replyIndex].replies.push(
+                  commentObj
+                );
+                this.comments[commentIndex].replies[replyIndex].showReplies = true; // Show replies immediately
+              } else if (type === "nestedReply") {
+                this.comments[commentIndex].replies[replyIndex].replies.push(
+                  commentObj
+                );
+                this.comments[commentIndex].replies[replyIndex].showReplies = true; // Show replies immediately
+              }
+            }
+
+            // Reset input and reply target after posting
+            this.newComment = "";
+            this.replyTarget = null;
+          } else {
+            console.error('Failed to post the comment:', response);
+          }
+        } catch (error) {
+          console.error('An error occurred while posting the comment:', error);
+        }
+      }
+    },
     toggleLike() {
       this.post.isLiked = !this.post.isLiked;
       this.post.likescount += this.post.isLiked ? 1 : -1;
