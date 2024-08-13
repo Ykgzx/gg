@@ -5,13 +5,126 @@
         <i
           class="fa-solid fa-bars text-2xl cursor-pointer"
           @click="toggleSidebar"
+          aria-label="Toggle sidebar"
         ></i>
-        <div><a href="/postpic">Logo</a></div>
+        <div>Logo</div>
       </div>
       <div class="flex gap-10 text-2xl items-center ml-auto">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <i class="fa-solid fa-bell"></i>
-        <i class="fa-regular fa-user"></i>
+        <div class="relative flex gap-2 items-center">
+          <i
+            v-if="!searchOpen"
+            class="fa-solid fa-magnifying-glass cursor-pointer"
+            @click="toggleSearch"
+            aria-label="Open search"
+          ></i>
+          <div v-show="searchOpen" class="relative">
+            <input
+              type="text"
+              class="rounded-xl w-80 border border-black px-2 text-lg search-input"
+              placeholder="ค้นหา"
+              ref="searchInput"
+              @input="handleSearchInput"
+              @focus="showSearchResults = true"
+              v-model="searchValue"
+              @keydown.enter="handleSearchSubmit"
+              aria-label="Search input"
+            />
+            <button
+              class="absolute top-1/2 right-2 transform -translate-y-1/2 text-xl"
+              @click="toggleSearch"
+              aria-label="Close search"
+            >
+              X
+            </button>
+            <!-- Search results overlay -->
+            <div
+              v-show="searchResultsOverlay"
+              class="search-results-overlay"
+              ref="searchResults"
+              aria-live="polite"
+              aria-label="Search results"
+            >
+              <div class="p-5 rounded-lg">
+                <div>
+                  <div class="flex justify-between items-center text-base">
+                    <h3>การค้นหาล่าสุด</h3>
+                    <button
+                      class=""
+                      @click="clearRecentSearches"
+                      aria-label="Clear recent searches"
+                    >
+                      ลบทั้งหมด
+                    </button>
+                  </div>
+                  <ul>
+                    <li
+                      v-if="
+                        searchResults.length === 0 &&
+                        searchValue &&
+                        recentSearches.length === 0
+                      "
+                      class="text-center text-gray-500"
+                      aria-live="assertive"
+                    >
+                      ไม่พบผลลัพธ์สำหรับ "{{ searchValue }}"
+                    </li>
+                    <li
+                      v-for="(item, index) in searchResults"
+                      :key="index"
+                      class="flex justify-between items-center hover:bg-gray-200 p-2 rounded-lg text-base cursor-pointer"
+                      @click="handleSearchItemClick(item)"
+                      aria-label="Search result: {{ item.name }}"
+                    >
+                      <div class="flex items-center">
+                        <img
+                          :src="item.image"
+                          class="w-8 h-8 rounded-full mr-3"
+                          alt=""
+                        />
+                        <div>
+                          <p>{{ item.name }}</p>
+                          <p class="text-gray-500 text-sm">
+                            {{ item.details }}
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                    <li
+                      v-for="(item, index) in recentSearches"
+                      :key="'recent-' + index"
+                      class="flex justify-between items-center hover:bg-gray-200 p-2 rounded-lg text-base cursor-pointer"
+                      @click="handleSearchItemClick(item)"
+                      aria-label="Recent search: {{ item.name }}"
+                    >
+                      <div class="flex items-center">
+                        <img
+                          :src="item.image"
+                          class="w-8 h-8 rounded-full mr-3"
+                          alt=""
+                        />
+                        <div>
+                          <p>{{ item.name }}</p>
+                          <p class="text-gray-500 text-sm">
+                            {{ item.details }}
+                          </p>
+                        </div>
+                      </div>
+                      <button
+                        class="hover:bg-gray-400 w-5 rounded-full"
+                        @click="removeSearch(index)"
+                        aria-label="Remove recent search"
+                      >
+                        X
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <i class="fa-solid fa-bell" aria-label="Notifications"></i>
+        <i class="fa-regular fa-user" aria-label="User profile"></i>
       </div>
     </div>
 
@@ -22,18 +135,23 @@
         { 'transform -translate-x-full': !sidebarOpen },
       ]"
       style="width: 250px"
+      aria-label="Sidebar"
     >
       <div class="flex justify-end py-2 px-3">
-        <i class="fa-solid fa-xmark text-2xl cursor-pointer" @click="toggleSidebarOff"></i>
+        <button
+          class="fa-solid fa-xmark text-2xl cursor-pointer"
+          @click="toggleSidebarOff"
+          aria-label="Close sidebar"
+        ></button>
       </div>
       <div class="mx-9">
         <ul class="flex flex-col gap-3">
-          <a href="/post"><li>หน้าหลัก</li></a>
+          <a href="/post"><li class="">หน้าหลัก</li></a>
           <li>ชุมชน</li>
           <li>เพิ่มชุมชน</li>
           <li>แชท</li>
           <li>ตระกร้า</li>
-          <li>ตั่งค่า</li>
+          <li>ตั้งค่า</li>
           <li>ประวัติการรายงาน</li>
           <li>ขอความช่วยเหลือ</li>
           <li>ส่งความคิดเห็น</li>
@@ -43,19 +161,61 @@
   </div>
 </template>
 
+
 <script>
 export default {
   data() {
     return {
       sidebarOpen: false,
       showOverlay: false,
-      showOverlay1: false,
-      selectedOption: '',
-      options: ['เฉพาะฉัน', 'สาธารณะ', 'เพื่อน', 'เพื่อนยกเว้น'],
-      searchQuery: '',
-      items: ['', '', '', '', '', ''],
-      text: '',
-      isOn: false,
+      searchResultsOverlay: false,
+      searchOpen: false,
+      searchValue: "",
+      selectedOption: "",
+      options: ["เฉพาะฉัน", "สาธารณะ", "แชร์กับ", "เพื่อนยกเว้น"],
+      searchResults: [],
+      recentSearches: [
+        {
+          name: "deep marcuc",
+          details: "7 รายการใหม่",
+          image: "https://via.placeholder.com/40",
+        },
+        {
+          name: "mac kerker",
+          details: "4 รายการใหม่",
+          image: "https://via.placeholder.com/40",
+        },
+        {
+          name: "john cena",
+          details: "6 รายการใหม่",
+          image: "https://via.placeholder.com/40",
+        },
+        {
+          name: "nat dedo",
+          details: "2 รายการใหม่",
+          image: "https://via.placeholder.com/40",
+        },
+        {
+          name: "zero guy",
+          details: "3 รายการใหม่",
+          image: "https://via.placeholder.com/40",
+        },
+        {
+          name: "timmy mctominy",
+          details: "",
+          image: "https://via.placeholder.com/40",
+        },
+        {
+          name: "mac john",
+          details: "",
+          image: "https://via.placeholder.com/40",
+        },
+        {
+          name: "john doe",
+          details: "9+ รายการใหม่",
+          image: "https://via.placeholder.com/40",
+        },
+      ],
     };
   },
   methods: {
@@ -66,100 +226,188 @@ export default {
       this.sidebarOpen = false;
     },
     closeOverlay() {
-          this.showOverlay = false;
+      this.showOverlay = false;
     },
-    closeOverlay1() {
-          this.showOverlay1 = false;
+    toggleSearch() {
+      this.searchOpen = !this.searchOpen;
+      this.searchResultsOverlay = this.searchOpen;
+      if (this.searchOpen) {
+        this.$nextTick(() => {
+          this.$refs.searchInput.focus();
+        });
+      } else {
+        this.searchResults = [];
+      }
     },
-   
-  },
-  computed: {
-    filteredItems() {
-      return this.items.filter(item =>
-        item.toLowerCase().includes(this.searchQuery.toLowerCase())
-      )
-    }
-  },
-  
+    hideSearchResults() {
+      setTimeout(() => {
+        if (!this.$refs.searchInput.contains(document.activeElement)) {
+          this.searchOpen = false;
+          this.searchResultsOverlay = false;
+        }
+      }, 200);
+    },
+    clearRecentSearches() {
+      this.recentSearches = [];
+    },
+    removeSearch(index) {
+      if (index >= 0 && index < this.recentSearches.length) {
+        this.recentSearches.splice(index, 1);
+      }
+    },
+    collectSearchResults(search) {
+      const exists = this.recentSearches.some(
+        (item) => item.name === search.name
+      );
 
+      if (!exists) {
+        this.recentSearches.unshift(search);
+
+        if (this.recentSearches.length > 7) {
+          this.recentSearches.pop();
+        }
+      }
+    }, 
+
+    handleSearchSubmit() {
+      if (this.searchValue) {
+        this.fetchSearchResults(this.searchValue).then((results) => {
+          this.searchResults = results;
+          this.collectSearchResults({
+            name: this.searchValue,
+            details: "ผลลัพธ์การค้นหา",
+            image: "https://via.placeholder.com/40",
+          });
+        });
+      }
+    },  
+
+    handleSearchInput(event) {
+      const searchValue = event.target.value;
+      if (searchValue) {
+        this.searchValue = searchValue;
+        this.fetchSearchResults(searchValue).then((results) => {
+          this.searchResults = results;
+        });
+      } else {
+        this.searchResults = [];
+      }
+    },  
+
+    async fetchSearchResults(query) {
+      return [
+        {
+          name: `Search result for ${query}`,
+          details: "Details about the search result",
+          image: "https://via.placeholder.com/40",
+        },
+        
+      ];
+    },
+
+    handleSearchItemClick(item) {
+      this.collectSearchResults(item);
+    } 
+  }
 }
+
 </script>
 
 <style>
-/* Add a CSS class to handle the transition for showing/hiding the sidebar */
+/* Add this CSS */
+.search-results-overlay {
+  position: absolute;
+  top: 100%; /* Position it right below the search input */
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  max-height: max-content; /* Adjust height as needed */
+  overflow-y: auto;
+}
+
+/* Existing CSS */
 .sidebar-transition {
   transition: transform 0.3s ease;
 }
-    
-.dd{
-      font-size: 18;
-      font-weight: bold;
-    }
-    
-    .hh{
-      width: 150px;
-      text-align: center;
-      border-radius: 10%;
-      background-color: blanchedalmond;
-    }
-    
-    .kk{
-      width: auto;
-      text-align: center;
-      border-radius: 10%;
-      background-color: blanchedalmond;
-    }
-    
-    .vv{
-      font-size: larger;
-      font-weight: bold;
-    }
-    
-    .shadow{
-      padding: 8px;
-      font-size: 16px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow here */
-    }
-    
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-    
-    .overlay-content {
-      background: white;
-      padding: 30px;
-      border-radius: 8px;
-    }
 
-    select {
-  padding: 8px;
-  font-size: 16px;
-}
-
-.ng{
+.shadow {
   padding: 8px;
   font-size: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow here */
 }
 
-<<<<<<< Updated upstream
+.dd {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.hh {
+  width: 150px;
+  text-align: center;
+  border-radius: 10%;
+  background-color: blanchedalmond;
+}
+
+.kk {
+  width: auto;
+  text-align: center;
+  border-radius: 10%;
+  background-color: blanchedalmond;
+}
+
+.vv {
+  font-size: larger;
+  font-weight: bold;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.overlay-content {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+}
+
+select {
+  padding: 8px;
+  font-size: 16px;
+}
+
 .search-container {
   position: relative;
   width: 100%;
 }
-=======
+
 .dd {
   font-size: 18px;
   font-weight: bold;
+}
+
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 .hh {
@@ -186,7 +434,43 @@ select {
   font-size: 16px;
 }
 
->>>>>>> Stashed changes
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
 
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
 
+input:checked + .slider {
+  background-color: #65558f;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.content-box {
+  padding: 20px;
+}
+
+.sw {
+  border-radius: 40px;
+}
 </style>
