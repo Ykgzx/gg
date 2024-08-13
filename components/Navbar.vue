@@ -151,75 +151,42 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow here */
 }
 
+<<<<<<< Updated upstream
 .search-container {
   position: relative;
   width: 100%;
 }
-
-.search-bar {
-  padding: 8px;
-  font-size: 16px;
-  margin-bottom: 20px;
-  width: 90%;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 64px;
+=======
+.dd {
+  font-size: 18px;
+  font-weight: bold;
 }
 
+.hh {
+  width: 150px;
+  text-align: center;
+  border-radius: 10%;
+  background-color: blanchedalmond;
+}
 
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 30px;
-  }
-  
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 34px;
-  }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 20px;
-    width: 20px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-  }
-  
-  input:checked + .slider {
-    background-color: #65558F;
-  }
-  
-  input:checked + .slider:before {
-    transform: translateX(26px);
-  }
-  
-  .content-box {
-    padding: 20px;
-    
-  }
+.kk {
+  width: auto;
+  text-align: center;
+  border-radius: 10%;
+  background-color: blanchedalmond;
+}
 
-  .sw{
-    border-radius: 40px;
-    
-  }
+.vv {
+  font-size: larger;
+  font-weight: bold;
+}
+
+select {
+  padding: 8px;
+  font-size: 16px;
+}
+
+>>>>>>> Stashed changes
+
 
 </style>
