@@ -1,10 +1,10 @@
 <template>
     <div class="flex flex-col gap-14">
-        <div class="ng flex justify-center gap-[900px]">
-            <div>
-                แท็กผู้คน
+        <div class="ng flex justify-center gap-[900px] ">
+            <div class="flex gap-6 text-xl">
+                <a href="/post"><img src="/arrow.png" alt=""></a>  <h1>แท็กผู้คน</h1>
             </div>
-            <div>
+            <div class="text-xl">
                 เรียบร้อย
             </div>
         </div>
@@ -18,40 +18,56 @@
                     </li>
                 </ul>
             </div>
+            <div>
             <div class="flex flex-col gap-8">
                 <div class="font-bold flex ml-16">
                     แนะนำ
                 </div>
+                
+                <div class="flex gap-[1000px]">
                 <div class="flex ml-16 gap-6">
                     <img src="/Proff.png" alt=""> <h1 class="font-bold text-xl">Username</h1>
                 </div>
+                <input class="h-6 w-6" type="checkbox" v-model="isOn">
+                </div>
+                <div class="flex gap-[1000px]">
                 <div class="flex ml-16 gap-6">
                     <img src="/Proff.png" alt=""> <h1 class="font-bold text-xl">Username</h1>
                 </div>
+                <input class="h-6 w-6" type="checkbox" v-model="isOn">
+                </div>
+                <div class="flex gap-[1000px]">
                 <div class="flex ml-16 gap-6">
                     <img src="/Proff.png" alt=""> <h1 class="font-bold text-xl">Username</h1>
                 </div>
+                <input class="h-6 w-6" type="checkbox" v-model="isOn">
+                </div>
+                <div class="flex gap-[1000px]">
                 <div class="flex ml-16 gap-6">
                     <img src="/Proff.png" alt=""> <h1 class="font-bold text-xl">Username</h1>
                 </div>
+                <input class="h-6 w-6" type="checkbox" v-model="isOn">
+                </div>
+                <div class="flex gap-[1000px]">
                 <div class="flex ml-16 gap-6">
                     <img src="/Proff.png" alt=""> <h1 class="font-bold text-xl">Username</h1>
                 </div>
+                <input class="h-6 w-6" type="checkbox" v-model="isOn">
+                </div>
+                <div class="flex gap-[1000px]">
                 <div class="flex ml-16 gap-6">
                     <img src="/Proff.png" alt=""> <h1 class="font-bold text-xl">Username</h1>
                 </div>
+                <input class="h-6 w-6" type="checkbox" v-model="isOn">
+                </div>
+                <div class="flex gap-[1000px]">
                 <div class="flex ml-16 gap-6">
                     <img src="/Proff.png" alt=""> <h1 class="font-bold text-xl">Username</h1>
                 </div>
-                <div class="flex ml-16 gap-6">
-                    <img src="/Proff.png" alt=""> <h1 class="font-bold text-xl">Username</h1>
+                <input class="h-6 w-6" type="checkbox" v-model="isOn">
                 </div>
-                <div class="flex ml-16 gap-6">
-                    <img src="/Proff.png" alt=""> <h1 class="font-bold text-xl">Username</h1>
-                </div>
-                <div class="flex ml-16 gap-6">
-                    <img src="/Proff.png" alt=""> <h1 class="font-bold text-xl">Username</h1>
-                </div>
+                
+            </div>
             </div>
         </div>
     </div>

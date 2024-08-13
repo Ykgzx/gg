@@ -371,7 +371,7 @@ export default {
     },
     handleSearchItemClick(item) {
       this.collectSearchResults(item);
-    },
+    }
   }
 }
 }
@@ -456,15 +456,11 @@ select {
   width: 100%;
 }
 
-.search-bar {
-  padding: 8px;
-  font-size: 16px;
-  margin-bottom: 20px;
-  width: 90%;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 64px;
+.dd {
+  font-size: 18px;
+  font-weight: bold;
 }
+
 
 .switch {
   position: relative;
@@ -477,6 +473,30 @@ select {
   opacity: 0;
   width: 0;
   height: 0;
+}
+
+.hh {
+  width: 150px;
+  text-align: center;
+  border-radius: 10%;
+  background-color: blanchedalmond;
+}
+
+.kk {
+  width: auto;
+  text-align: center;
+  border-radius: 10%;
+  background-color: blanchedalmond;
+}
+
+.vv {
+  font-size: larger;
+  font-weight: bold;
+}
+
+select {
+  padding: 8px;
+  font-size: 16px;
 }
 
 .slider {
