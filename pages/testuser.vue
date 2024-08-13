@@ -25,7 +25,7 @@ export default {
   methods: {
     async fetchUsers() {
       try {
-        const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+        const response = await axios.get('http://localhost:3000/users');
         this.users = response.data; // เก็บข้อมูลที่ได้จาก API ลงในตัวแปร users
       } catch (error) {
         console.error('เกิดข้อผิดพลาดในการดึงข้อมูล', error);
