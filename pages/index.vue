@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <div class="min-h-screen bg-pippin-100">
     <navbar />
+    <Content :post="post" :comments="comments" />
     <Content :post="post" :comments="comments" />
   </div>
 </template>
 
+<!-- 
 <script>
 import axios from 'axios';
 import Content from '~/components/content.vue';
@@ -36,4 +38,4 @@ export default {
     },
   },
 };
-</script>
+</script> -->

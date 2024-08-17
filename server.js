@@ -3,12 +3,16 @@ import mysql from 'mysql2';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import { swaggerSpec, swaggerUi } from './swagger.js'; // Import swaggerSpec และ swaggerUi
 
 dotenv.config();
-
 const app = express();
-app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+
+// Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec)); // เพิ่มเส้นทางสำหรับ Swagger
 
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -38,6 +42,37 @@ app.get('/users', (req, res) => {
   });
 });
 
+/** 
+ * @swagger
+ * /posts:
+ *   get:
+ *     summary: Retrieve a list of posts
+ *     description: Retrieve a list of posts from the database with user information.
+ *     responses:
+ *       200:
+ *         description: A list of posts.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   user_id:
+ *                     type: integer
+ *                   first_name:
+ *                     type: string
+ *                   last_name:
+ *                     type: string
+ *                   title:
+ *                     type: string
+ *                   picture:
+ *                     type: string
+ *                   post_video_url:
+ *                     type: string
+ *                   post_updated_at:
+ *                     type: string
+ */
 app.get('/posts', (req, res) => {
   const query = `
     SELECT 
@@ -46,7 +81,7 @@ app.get('/posts', (req, res) => {
       u.last_name, 
       p.post_title AS title, 
       p.post_picture AS picture, 
-      p.post_video_url AS post_video_url, 
+      p.post_video AS post_video, 
       p.post_updated_at 
     FROM 
       Posts p
