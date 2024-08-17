@@ -1,6 +1,6 @@
 <template>
-  <div class="mx-[25%] my-4 bg-gray-100">
-    <div class="border border-black p-3 rounded-xl">
+  <div class="mx-[25%] pt-14">
+    <div class="border border-black p-3 rounded-xl bg-white">
       <div class="flex items-center gap-3 pb-2">
         <i class="fa-regular fa-user"></i>
         <div class="flex items-end gap-2">
@@ -15,7 +15,7 @@
           ></button>
         </div>
       </div>
-      <p class="py-2">{{ post.text }}</p>
+      <p class="py-8">{{ post.text }}</p>
       <img
         v-if="post.image"
         :src="post.image"
@@ -24,22 +24,21 @@
       />
       <div class="flex items-center">
         <div
-          class="border border-black px-1 flex items-center rounded-lg gap-2 w-max"
+          class="px-1 flex items-center rounded-lg gap-2 w-max"
         >
-          <div class="">
+          <div class="flex flex-col">
             <button
               @click="toggleLike"
               :class="
                 post.isLiked
-                  ? 'fa-solid fa-thumbs-up text-blue-500'
-                  : 'fa-solid fa-thumbs-up'
+                  ? 'fa-solid fa-heart text-sweet-pink-500'
+                  : 'fa-regular fa-heart'
               "
             ></button>
             {{ post.likescount }}
           </div>
-          <button class="fa-solid fa-thumbs-down p-1 flex items-end"></button>
           <div
-            class="border p-1 border-l-1 border-black border-t-0 border-r-0 border-b-0"
+            class="p-1 flex flex-col"
           >
             <button
               class="fa-solid fa-comments"
@@ -48,8 +47,8 @@
             {{ post.commentscount }}
           </div>
         </div>
-        <div class="flex ml-auto border border-black p-1 rounded-lg">
-          <button class="fa-solid fa-share" @click="toggleShare"></button>
+        <div class="flex ml-auto text-l p-1 rounded-lg">
+          <button class="fa-solid fa-share-nodes" @click="toggleShare"></button>
         </div>
       </div>
     </div>
@@ -105,7 +104,7 @@
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
     @click.self="toggleShare"
   >
-    <div class="bg-white p-5 rounded-lg w-[400px]">
+    <div class="bg-sweet-pink-300 p-5 rounded-lg w-[400px]">
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-center flex-grow">ส่งไปยัง</h3>
         <button
@@ -322,7 +321,7 @@ export default {
         username: "John Doe",
         time_upload: "5 ชั่วโมงที่แล้ว",
         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        image: "https://via.placeholder.com/500",
+        image: "",
         isLiked: false,
         likescount: 120,
         commentscount: 34,
@@ -347,11 +346,6 @@ export default {
           {
             id: 4,
             username: "เพื่อน 4",
-            profile_picture: "https://via.placeholder.com/150",
-          },
-          {
-            id: 5,
-            username: "เพื่อน 5",
             profile_picture: "https://via.placeholder.com/150",
           },
         ],
