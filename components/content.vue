@@ -59,7 +59,7 @@
     ref="overlayMore"
     v-if="overlayMore"
     :style="overlayMoreStyle"
-    class="fixed bg-white p-5 rounded w-[290px] z-50 border border-black"
+    class="fixed inline-block bg-white p-5 rounded w-[290px] z-50 border border-black"
   >
     <div class="flex">
       <button
