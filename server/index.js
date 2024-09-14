@@ -258,18 +258,34 @@ app.get('/api/users/:user_id/profile', (req, res) => {
   });
 });
 
-// logni
-app.post('/api/login', async (req, res) => {
+// login user
+app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
-  const sql = 'SELECT * FROM users WHERE username = ?';
-  db.query(sql, [username], async (err, results) => {
-    if (err) return res.status(500).send('Server error');
-    if (results.length === 0) return res.status(401).send('User not found');
-    const validPassword = await bcrypt.compare(password, results[0].password);
-    if (!validPassword) return res.status(401).send('Invalid password');
-    res.send('Login successful');
+
+  // Query to find the user by username
+  const userQuery = 'SELECT * FROM users WHERE username = ?';
+  
+  db.query(userQuery, [username], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+
+    if (results.length === 0) {
+      return res.status(401).json({ error: 'Invalid username or password' });
+    }
+
+    const user = results[0];
+
+    if (user.password === password) {
+      // Password matches
+      res.status(200).json({ message: 'Login successful!' });
+    } else {
+      // Invalid password
+      res.status(401).json({ error: 'Invalid username or password' });
+    }
   });
 });
+
 
 
 
