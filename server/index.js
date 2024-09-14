@@ -258,10 +258,23 @@ app.get('/api/users/:user_id/profile', (req, res) => {
   });
 });
 
+// logni
+app.post('/api/login', async (req, res) => {
+  const { username, password } = req.body;
+  const sql = 'SELECT * FROM users WHERE username = ?';
+  db.query(sql, [username], async (err, results) => {
+    if (err) return res.status(500).send('Server error');
+    if (results.length === 0) return res.status(401).send('User not found');
+    const validPassword = await bcrypt.compare(password, results[0].password);
+    if (!validPassword) return res.status(401).send('Invalid password');
+    res.send('Login successful');
+  });
+});
+
 
 
 // Start the server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
