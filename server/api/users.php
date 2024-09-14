@@ -3,7 +3,7 @@ header('Content-Type: application/json');
 $servername = "localhost";
 $username = "root";
 $password = ""; // Default XAMPP MySQL password is empty
-$dbname = "socialmedia";
+$dbname = "your_database";
 
 // Create a connection
 $conn = new mysqli($servername, $username, $password, $dbname);
