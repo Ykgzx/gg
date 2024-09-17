@@ -36,5 +36,18 @@ export default defineNuxtConfig({
   },
 
   modules: ['@nuxtjs/tailwindcss'],
+<<<<<<< Updated upstream
   compatibilityDate: "2024-08-13"
 })
+=======
+  compatibilityDate: "2024-08-02",
+  // nuxt.config.js
+
+  // Global page transition settings for the overlay
+  pageTransition: {
+    name: 'slide-overlay', // Name of the transition
+    mode: 'out-in' // Ensures the old page leaves before the new one enters
+  }
+
+});
+>>>>>>> Stashed changes

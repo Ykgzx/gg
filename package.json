@@ -10,7 +10,22 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+<<<<<<< Updated upstream
     "nuxt": "^3.10.1",
+=======
+    "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/proxy": "^2.1.0",
+    "axios": "^1.7.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.11.0",
+    "nuxt": "^3.13.0",
+    "sequelize": "^6.37.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+>>>>>>> Stashed changes
     "vue": "^3.4.15",
     "vue-router": "^4.2.5"
   },

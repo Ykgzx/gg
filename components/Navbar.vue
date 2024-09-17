@@ -1,4 +1,5 @@
 <template>
+<<<<<<< Updated upstream
   <div>
     <div class="py-3 mx-20 flex">
       <div class="flex gap-10 items-center justify-start">
@@ -128,6 +129,100 @@
       </div>
     </div>
 
+=======
+  <div class="px-[6%] py-5 bg-sweet-pink-300 rounded-bl-full h-[200px]">
+    <div class="flex justify-between items-center mb-3">
+      <div class="flex items-center gap-6">
+        <button @click="toggleSidebar"><div class=""><img src="/Group 1.png" alt=""></div></button>
+        <div class=""><img class="h-16 w-36" src="/logo.jpg" alt=""></div>
+      </div>
+      <div class="flex justify-center items-center gap-6">
+        <button @click="toggleOverlay"><img class="h-8 w-8" src="/icons bell.png" alt=""></button>
+          <div v-if="isOverlayVisible" class="overlay1" @click="toggleOverlay">
+            <div class="overlay-content1 bg-pippin-100 border border-sweet-pink-300" @click.stop>
+              <button class="flex ml-auto" @click="toggleOverlay"><img src="/X.png" alt=""></button>
+              <div>
+                <div class="border border-sweet-pink-300 w-full">
+                  <div class="flex gap-4">
+                      <h1 class="text-xl font-bold">RTX-4060</h1>
+                      <div class="flex  items-center">
+                        <h1 class="">กดไลค์บนโพสต์ล่าสุดของคุณ</h1>
+                        
+                      </div>
+                  </div>
+                  <div class="flex gap-8"><h1>31 Aug 2567</h1><h1>12:20</h1></div>
+                </div>
+                <div class="border border-sweet-pink-300 w-full">
+                  <div class="flex gap-4">
+                      <h1 class="text-xl font-bold">RTX-4060</h1>
+                      <div class="flex  items-center">
+                        
+                        <h1 class="">คอมเมนท์บนโพสต์ล่าสุดของคุณ</h1>
+                      </div>
+                  </div>
+                  <div class="flex gap-8"><h1>28 Aug 2567</h1><h1>18:22</h1></div>
+                </div>
+                <div class="border border-sweet-pink-300 w-full">
+                  <div class="flex gap-4">
+                      <h1 class="text-xl font-bold">RTX-4060</h1>
+                      <div class="flex  items-center">
+                        
+                        <h1 class="">ติดตามคุณ</h1>
+                      </div>
+                  </div>
+                  <div class="flex gap-8"><h1>22 Aug 2567</h1><h1>08:39</h1></div>
+                </div>
+                <div class="border border-sweet-pink-300 w-full">
+                  <div class="flex gap-4">
+                      <h1 class="text-xl font-bold">RTX-4060</h1>
+                      <div class="flex  items-center">
+                        
+                        <h1 class="">กดไลค์บนโพสต์ล่าสุดของคุณ</h1>
+                      </div>
+                  </div>
+                  <div class="flex gap-8"><h1>11 Aug 2567</h1><h1>10:51</h1></div>
+                </div>
+                <div class="border border-sweet-pink-300 w-full">
+                  <div class="flex gap-4">
+                      <h1 class="text-xl font-bold">RTX-4060</h1>
+                      <div class="flex  items-center">
+                        
+                        <h1 class="">กดไลค์บนโพสต์ล่าสุดของคุณ</h1>
+                      </div>
+                  </div>
+                  <div class="flex gap-8"><h1>10 Aug 2567</h1><h1>12:38</h1></div>
+                </div>
+
+              </div>
+              
+            </div>
+          </div>
+        <input
+          type="text"
+          placeholder="Search...."
+          class="rounded-full p-2 border-none shadow-md w-[250px]"
+        />
+      </div>
+    </div>
+
+    <div class="flex justify-center pt-10">
+      <a href="/postcorrect"><img src="/Group 249.png" alt=""></a>
+    </div>
+  </div>
+  <div class="bg-sweet-pink-300">
+    <div class="px-[25%] pt-5 font-bold bg-pippin-100 rounded-tr-full">
+      แนะนำเพื่อน
+      <a href="/profile"><div class="mt-5">
+        <friend-recomment
+          profile="https://via.placeholder.com/135"
+          pet_type="🐶"
+          username="John Doe"
+        />
+    </div></a>
+  </div>
+
+
+>>>>>>> Stashed changes
     <!-- Sidebar -->
     <div
       :class="[
@@ -146,12 +241,15 @@
       </div>
       <div class="mx-9">
         <ul class="flex flex-col gap-3">
+<<<<<<< Updated upstream
           <a href="/post"><li class="">หน้าหลัก</li></a>
+=======
+          <a href="/" ><li class="">หน้าหลัก</li></a>
+>>>>>>> Stashed changes
           <li>ชุมชน</li>
           <li>เพิ่มชุมชน</li>
-          <li>แชท</li>
-          <li>ตระกร้า</li>
-          <li>ตั้งค่า</li>
+          <a href="/tchatt"><li>แชท</li></a>
+          <a href="/setting"><li>ตั้งค่า</li></a>
           <li>ประวัติการรายงาน</li>
           <li>ขอความช่วยเหลือ</li>
           <li>ส่งความคิดเห็น</li>
@@ -168,6 +266,7 @@ export default {
     return {
       sidebarOpen: false,
       showOverlay: false,
+      isOverlayVisible: false,
       searchResultsOverlay: false,
       searchOpen: false,
       searchValue: "",
@@ -224,6 +323,9 @@ export default {
     },
     toggleSidebarOff() {
       this.sidebarOpen = false;
+    },
+    toggleOverlay() {
+      this.isOverlayVisible = !this.isOverlayVisible
     },
     closeOverlay() {
       this.showOverlay = false;
@@ -314,6 +416,7 @@ export default {
 </script>
 
 <style>
+<<<<<<< Updated upstream
 /* Add this CSS */
 .search-results-overlay {
   position: absolute;
@@ -474,3 +577,26 @@ input:checked + .slider:before {
   border-radius: 40px;
 }
 </style>
+=======
+
+.overlay1 {
+  position: fixed;
+  top: -120px;
+  left: 160px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.overlay-content1 {
+  
+  padding: 20px;
+  border-radius: 8px;
+}
+
+</style>
+>>>>>>> Stashed changes
