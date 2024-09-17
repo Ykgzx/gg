@@ -1,10 +1,39 @@
 import express from 'express';
 import mysql from 'mysql2';
 import cors from 'cors';
+<<<<<<< HEAD
+=======
+import multer from 'multer';
+import path from 'path';
+>>>>>>> ykg-working-space
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+<<<<<<< HEAD
+=======
+app.use(express.static('uploads'));  // Serve static files from the uploads folder
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');  // เก็บไฟล์ในโฟลเดอร์ uploads
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);  // ตั้งชื่อไฟล์ให้ไม่ซ้ำกัน
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (file.fieldname === 'images') {
+      cb(null, true);
+    } else {
+      cb(new multer.MulterError('Unexpected field'), false);
+    }
+  }
+});
+>>>>>>> ykg-working-space
 
 // MySQL Database Connection
 const db = mysql.createConnection({
@@ -30,6 +59,10 @@ app.get('/api/posts', (req, res) => {
            users.username, users.profile_picture
     FROM posts
     JOIN users ON posts.user_id = users.user_id
+<<<<<<< HEAD
+=======
+    ORDER BY posts.created_at DESC  -- เรียงโพสต์จากใหม่ไปเก่า
+>>>>>>> ykg-working-space
   `;
   
   db.query(sqlQuery, (err, results) => {
@@ -40,6 +73,38 @@ app.get('/api/posts', (req, res) => {
   });
 });
 
+<<<<<<< HEAD
+=======
+// POST route to create a new post
+app.post('/api/uploads/posts', upload.array('images'), (req, res) => {
+  const { user_id, content } = req.body;
+  const images = req.files ? req.files.map(file => `/uploads/${file.filename}`) : [];  // เก็บเส้นทางไฟล์ที่ถูกอัพโหลด
+
+  // ตรวจสอบข้อมูลที่จำเป็น
+  if (!user_id || !content) {
+    return res.status(400).json({ error: 'User ID and content are required' });
+  }
+
+  // Query สำหรับการเพิ่มโพสต์
+  const sqlQuery = 'INSERT INTO posts (user_id, content, images) VALUES (?, ?, ?)';
+
+  // บันทึกข้อมูลในฐานข้อมูล
+  db.query(sqlQuery, [user_id, content, images.join(',')], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+
+    // ส่งข้อมูลกลับไปให้ผู้ใช้
+    res.status(201).json({
+      post_id: result.insertId,
+      user_id,
+      content,
+      images: images.join(','),  // ส่ง URL ของไฟล์รูปภาพกลับไป
+    });
+  });
+});
+
+>>>>>>> ykg-working-space
 // POST route to add a new comment
 app.post('/api/comments', (req, res) => {
   const { post_id, user_id, content } = req.body;
@@ -147,7 +212,10 @@ app.put('/api/notifications/:notification_id/read', (req, res) => {
   });
 });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ykg-working-space
 // Friend Recommendation API for users who have different pets from the specified user
 app.get('/api/users/:user_id/recommend-friends', (req, res) => {
   const { user_id } = req.params;
@@ -286,9 +354,12 @@ app.post('/api/login', (req, res) => {
   });
 });
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> ykg-working-space
 // Start the server
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
